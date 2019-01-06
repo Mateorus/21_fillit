@@ -6,11 +6,10 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 14:25:21 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/01/05 15:16:32 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/06 23:37:37 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "fillit.h"
 
 int	main(int argc, char **argv)
@@ -24,8 +23,9 @@ int	main(int argc, char **argv)
 	}
 	if ((fd = open(argv[1], O_RDONLY)) == -1)
 	{
-		ft_putstr("no such file\n");
+		ft_putstr("can't open ");
+		ft_putendl(argv[1]);
 		return (1);
 	}
-	fillit(fd);
+	validator(fd);
 }

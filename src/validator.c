@@ -6,11 +6,20 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 14:19:11 by gstiedem          #+#    #+#             */
-/*   Updated: 2018/12/29 13:35:21 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/06 23:29:40 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
+
+void	assert(int i)
+{
+	if (!i)
+	{
+		ft_putstr("error\n");
+		exit(0);
+	}
+}
 
 int		valid_block(char *buf)
 {
@@ -27,9 +36,9 @@ int		valid_block(char *buf)
 				neighbors++;
 			if (i > 0 && buf[i - 1] == '#')
 				neighbors++;
-			if (i >= 5 && buf[i - 5] == '#')
+			if (i > 4 && buf[i - 5] == '#')
 				neighbors++;
-			if (i <= 15 && buf[i + 5] == '#')
+			if (i < 14 && buf[i + 5] == '#')
 				neighbors++;
 		}
 	}
@@ -38,7 +47,7 @@ int		valid_block(char *buf)
 	return (1);
 }
 
-void	write_valid_card(char **set, char *buf)
+void	valid_card(uint16_t **set, char *buf)
 {
 	int	counter;
 	int	i;
@@ -49,39 +58,29 @@ void	write_valid_card(char **set, char *buf)
 	{
 		if ((i + 1) % 5 && (buf[i] != '.' && buf[i] != '#'))
 			assert(0);
-		if (!((i + 1) % 5) && !(buf[i] == '\n'))
+		if (!((i + 1) % 5) && buf[i] != '\n')
 			assert(0);
 		if (buf[i] == '#')
 			counter++;
 	}
 	assert(counter == 4 && valid_block(buf));
-	if (!(*set = ft_strdup(buf)))
-	{
-		ft_putstr("malloc failed\n");
-		exit(0);
-	}
 }
 
-int		validator(int fd, char **set)
+void	validator(int fd, uint16_t **set)
 {
 	int		rd;
 	char	buf[CARD_SIZE + 1];
 	int		total;
-	int		file_size;
 
 	total = 0;
-	file_size = 0;
-	while ((rd = read(fd, buf, CARD_SIZE + 1)) > 0)
+	while ((rd = read(fd, buf, CARD_SIZE + 1)) >= 20)
 	{
 		assert(buf[rd - 1] == '\n');
-		rd == 20 ? (buf[rd] = 0) : (buf[rd - 1] = 0);
-		write_valid_card(set, buf);
+		buf[CARD_SIZE] = 0;
+		valid_card(set, buf);
 		set++;
 		total++;
-		file_size += rd;
 	}
-	if (rd == -1 || (file_size + 1) % (CARD_SIZE + 1) ||
-		file_size < CARD_SIZE || total > MAX_CARDS)
+	if (rd != 0 || !total || total > MAX_CARDS)
 		assert(0);
-	return (total);
 }
