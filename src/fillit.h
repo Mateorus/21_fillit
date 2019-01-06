@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 14:30:52 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/01/06 23:36:29 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/06 23:43:13 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@
 
 # define CARD_SIZE		20
 # define MAX_CARDS		26
-int		validator(int fd);
+void	validator(int fd);
 #endif

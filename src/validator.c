@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/20 14:19:11 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/01/06 23:29:40 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/07 00:08:13 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		valid_block(char *buf)
 	return (1);
 }
 
-void	valid_card(uint16_t **set, char *buf)
+void	valid_card(char *buf)
 {
 	int	counter;
 	int	i;
@@ -66,21 +66,22 @@ void	valid_card(uint16_t **set, char *buf)
 	assert(counter == 4 && valid_block(buf));
 }
 
-void	validator(int fd, uint16_t **set)
+void	validator(int fd)
 {
 	int		rd;
-	char	buf[CARD_SIZE + 1];
+	int		last_rd;
 	int		total;
+	char	buf[CARD_SIZE + 1];
 
 	total = 0;
 	while ((rd = read(fd, buf, CARD_SIZE + 1)) >= 20)
 	{
 		assert(buf[rd - 1] == '\n');
 		buf[CARD_SIZE] = 0;
-		valid_card(set, buf);
-		set++;
+		valid_card(buf);
+		last_rd = rd;
 		total++;
 	}
-	if (rd != 0 || !total || total > MAX_CARDS)
+	if (rd != 0 || !total || total > MAX_CARDS || last_rd != CARD_SIZE)
 		assert(0);
 }
