@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/23 20:46:45 by gstiedem          #+#    #+#             */
-/*   Updated: 2018/12/27 15:39:56 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/05 15:07:44 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,18 +60,6 @@ int		sqr_root_ceiling(int x)
 		sum = i * i;
 	}
 	return (i);
-}
-
-void	pop_arrs(t_sjt arr[], int total)
-{
-	int	i;
-
-	i = -1;
-	while (++i < total)
-	{
-		arr[i].num = i;
-		arr[i].direction = LEFT;
-	}
 }
 
 void	clean_map(char *map)

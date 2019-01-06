@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 14:25:21 by gstiedem          #+#    #+#             */
-/*   Updated: 2018/12/27 14:31:08 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/05 15:16:32 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,17 +28,4 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	fillit(fd);
-
-/*	t_sjt	arr[4];
-	int		i;
-
-	pop_arrs(arr, 4);
-	while (permute(arr, 4))
-	{
-		i = -1;
-		while (++i < 4)
-			ft_putnbr(arr[i].num);
-		ft_putchar('\n');
-	}
-	*/
 }

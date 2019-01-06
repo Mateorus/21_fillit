@@ -1,22 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   arrange.c                                          :+:      :+:    :+:   */
+/*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/12/23 20:44:10 by gstiedem          #+#    #+#             */
-/*   Updated: 2018/12/27 15:20:51 by gstiedem         ###   ########.fr       */
+/*   Created: 2019/01/05 15:18:36 by gstiedem          #+#    #+#             */
+/*   Updated: 2019/01/06 14:32:58 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
 
-int		pop_block(char *map, int tetr_num)
+int		pop_block(char *map, char c)
 {
-	char	c;
-
-	c = 'A' + tetr_num;
 	while (*map)
 	{
 		if (*map == c)
@@ -26,67 +23,49 @@ int		pop_block(char *map, int tetr_num)
 	return (0);
 }
 
-int		push_block(char *map, char *block, int map_side, int tetr_num)
+int		push_block(char *map, char *block, int map_side, char c)
 {
 	int i;
 	int	len;
 
 	i = 0;
 	len = ft_strchr(block, '\n') - block;
-	block = ft_strchr(block, 'A' + tetr_num);
+	block = ft_strchr(block, c);
 	while (*(block + 1))
 	{
-		if (map[i] == '.' && (ft_isalpha(*block)))
+		if (map[i] == '.' && *block == c)
 			map[i++] = *block++;
 		else if (*block == '\n')
 		{
 			if (!(i < (map_side + 1) * (map_side - 1)))
-				return (pop_block(map, tetr_num));
+				return (pop_block(map, c));
 			i += map_side + 1 - len;
 			block++;
 		}
 		else if (*block++ == '.')
 			i++;
 		else
-			return (pop_block(map, tetr_num));
+			return (pop_block(map, c));
 	}
 	return (1);
 }
 
-int		try_to_push(char *map, char *block, int map_side, int tetr_num)
+int		arrange(char **map, char **set, int map_side, char c)
 {
-	while (*map)
-	{
-		if (*map == '.' && push_block(map, block, map_side, tetr_num))
-			return (1);
-		map++;
-	}
-	return (0);
-}
+	char	*cur_map;
 
-int		arrange(char **map, char **set, int map_side, int total)
-{
-	int		i;
-	int		res;
-	t_sjt	arr[MAX_CARDS];
-
-	pop_arrs(arr, total);
-	res = 1;
-	i = -1;
-	while (res)
+	if (!*set)
+		return (1);
+	cur_map = *map;
+	while (*cur_map)
 	{
-		while (++i < total)
+		if (push_block(cur_map, *set, map_side, c))
 		{
-			if (!try_to_push(*map, set[arr[i].num], map_side, arr[i].num))
-			{
-				i = -1;
-				break ;
-			}
-			if (i == total - 1)
+			if (arrange(map, set + 1, map_side, c + 1))
 				return (1);
+			pop_block(*map, c);
 		}
-		clean_map(*map);
-		res = permute(arr, total);
+		cur_map++;
 	}
 	return (0);
 }
@@ -99,7 +78,7 @@ char	*get_square(char **set, int total)
 	map_side = sqr_root_ceiling(4 * total);
 	map = NULL;
 	get_map(&map, map_side);
-	while (!arrange(&map, set, map_side, total))
+	while (!arrange(&map, set, map_side, 'A'))
 		get_map(&map, ++map_side);
 	return (map);
 }
