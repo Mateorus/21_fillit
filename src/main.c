@@ -6,11 +6,10 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 14:25:21 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/01/05 15:16:32 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/06 23:38:56 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "fillit.h"
 
 int	main(int argc, char **argv)
