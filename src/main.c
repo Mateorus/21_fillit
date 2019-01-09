@@ -6,25 +6,11 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 14:25:21 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/01/09 01:49:42 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/09 14:22:32 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fillit.h"
-
-void printbits(uint16_t x)
-{
-	int	i;
-
-	i = 16;
-    while(i)
-	{
-	//	if (!(i % 4))
-	//		ft_putchar('\n');
-        ft_putchar('0' + ((x >> (i - 1)) & 1));
-		i--;
-	}
-}
 
 int	main(int argc, char **argv)
 {
@@ -46,11 +32,4 @@ int	main(int argc, char **argv)
 	ft_bzero(set, sizeof(set));
 	solver(&map, set, validator(fd, set));
 	print_map(&map, set);
-	int i = 0;
-	while (i < 16)
-	{
-		printbits(map.row[i]);
-		ft_putchar('\n');
-		i++;
-	}
 }
