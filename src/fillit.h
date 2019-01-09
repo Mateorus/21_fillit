@@ -6,7 +6,7 @@
 /*   By: gstiedem <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/14 14:30:52 by gstiedem          #+#    #+#             */
-/*   Updated: 2019/01/05 15:28:15 by gstiedem         ###   ########.fr       */
+/*   Updated: 2019/01/09 13:46:13 by gstiedem         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,19 @@
 
 # define CARD_SIZE		20
 # define MAX_CARDS		26
-void	fillit(int fd);
-void	assert(int i);
-int		validator(int fd, char **set);
-void	prepare_tetraminos(char **set);
-void	trim(char *tetr);
-char	*get_square(char **set, int total);
-void	print_square(char *square);
-void	get_map(char **map, int map_side);
-int		sqr_root_ceiling(int x);
-void	clean_map(char *map);
+
+typedef struct	s_etr
+{
+	int				pos;
+	uint16_t		value;
+}				t_etr;
+typedef struct	s_map
+{
+	int			side;
+	uint16_t	row[16];
+}				t_map;
+int		validator(int fd, t_etr *set);
+void	solver(t_map *map, t_etr *set, int total);
+void	print_map(t_map *map, t_etr *tetr);
+int		ft_sqrt(int x);
 #endif
